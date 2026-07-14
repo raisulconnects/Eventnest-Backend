@@ -6,12 +6,11 @@ interface TokenPayload {
   role: string;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret";
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "7d";
-
 export const signToken = (payload: TokenPayload): string => {
-  return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN as string,
+  const secret = process.env.JWT_SECRET || "fallback_secret";
+  const expiresIn = process.env.JWT_EXPIRES_IN || "7d";
+  return jwt.sign(payload, secret, {
+    expiresIn,
   } as jwt.SignOptions);
 };
 

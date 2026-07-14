@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import User from "../models/User";
 import Event from "../models/Event";
 import Review from "../models/Review";
+import Reservation from "../models/Reservation";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const seedData = async () => {
     console.log("Connected to MongoDB");
 
     await Review.deleteMany({});
+    await Reservation.deleteMany({});
     await Event.deleteMany({});
     await User.deleteMany({});
     console.log("Cleared existing data");
@@ -306,6 +308,37 @@ const seedData = async () => {
       });
     }
     console.log("Updated events with review references");
+
+    const reservations = await Reservation.create([
+      {
+        event: events[0]._id,
+        user: demoUser._id,
+        status: "confirmed",
+        attendees: 2,
+      },
+      {
+        event: events[1]._id,
+        user: adminUser._id,
+        status: "confirmed",
+        attendees: 1,
+      },
+      {
+        event: events[5]._id,
+        user: demoUser._id,
+        status: "confirmed",
+        attendees: 1,
+      },
+    ]);
+    console.log(`Created ${reservations.length} reservations`);
+
+    for (const reservation of reservations) {
+      if (reservation.status === "confirmed") {
+        await Event.findByIdAndUpdate(reservation.event, {
+          $inc: { attendeeCount: reservation.attendees },
+        });
+      }
+    }
+    console.log("Updated events with attendee counts");
 
     console.log("\nSeed completed successfully!");
     console.log("\nDemo credentials:");

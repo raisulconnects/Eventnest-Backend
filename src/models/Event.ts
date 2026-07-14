@@ -57,6 +57,11 @@ const eventSchema = new Schema(
       type: Number,
       default: 100,
     },
+    attendeeCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
     ratingAverage: {
       type: Number,
       default: 0,
