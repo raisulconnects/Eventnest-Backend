@@ -96,6 +96,7 @@ export const getEventById = async (
 
     const enrichedEvent = {
       ...eventObj,
+      organizerId: (eventObj.organizer as any)?._id?.toString() || "",
       organizerName: (eventObj.organizer as any)?.name || "",
       time: "",
       reviews: (eventObj.reviews || []).map((review: any) => ({

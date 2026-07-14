@@ -4,7 +4,7 @@ import User from "../models/User";
 
 export const protect = async (
   req: Request,
-  _res: Response,
+  res: Response,
   next: NextFunction
 ) => {
   let token: string | undefined;
@@ -17,7 +17,10 @@ export const protect = async (
   }
 
   if (!token) {
-    return next();
+    return res.status(401).json({
+      success: false,
+      message: "Not authenticated",
+    });
   }
 
   try {
@@ -30,7 +33,10 @@ export const protect = async (
     const user = await User.findById(decoded.id).select("name email role");
 
     if (!user) {
-      return next();
+      return res.status(401).json({
+        success: false,
+        message: "User not found",
+      });
     }
 
     req.user = {
@@ -42,6 +48,9 @@ export const protect = async (
 
     next();
   } catch {
-    next();
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired token",
+    });
   }
 };
