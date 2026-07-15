@@ -26,6 +26,13 @@ class ApiFeatures {
       filter.price = priceFilter;
     }
 
+    const dateFilter: any = {};
+    if (params.startDate) dateFilter.$gte = new Date(params.startDate);
+    if (params.endDate) dateFilter.$lte = new Date(params.endDate);
+    if (Object.keys(dateFilter).length) {
+      filter.date = dateFilter;
+    }
+
     return filter;
   }
 

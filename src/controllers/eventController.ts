@@ -9,10 +9,10 @@ export const getAllEvents = async (
   next: NextFunction
 ) => {
   try {
-    const { search, category, location, minPrice, maxPrice, sort, order, page, limit } =
+    const { search, category, location, minPrice, maxPrice, startDate, endDate, sort, order, page, limit } =
       req.query as Record<string, string>;
 
-    const filter = ApiFeatures.buildFilter({ search, category, location, minPrice, maxPrice });
+    const filter = ApiFeatures.buildFilter({ search, category, location, minPrice, maxPrice, startDate, endDate });
     const sortObj = ApiFeatures.buildSort(sort, order) as Record<string, 1 | -1>;
     const { pageNum, limitNum, skip } = ApiFeatures.buildPagination(page, limit);
 
