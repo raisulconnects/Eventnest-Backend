@@ -20,7 +20,7 @@ app.set("query parser", "extended");
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: (process.env.CLIENT_URL || "http://localhost:3000").replace(/\/+$/, ""),
     credentials: true,
   })
 );
