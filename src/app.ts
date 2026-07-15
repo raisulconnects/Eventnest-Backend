@@ -9,6 +9,7 @@ import eventRoutes from "./routes/eventRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
 import userRoutes from "./routes/userRoutes";
 import reservationRoutes from "./routes/reservationRoutes";
+import contactRoutes from "./routes/contactRoutes";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/v1/events", eventRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/reservations", reservationRoutes);
+app.use("/api/v1/contacts", contactRoutes);
 
 app.get("/api/v1/health", (_req, res) => {
   res.json({ success: true, message: "EventNest API is running" });
