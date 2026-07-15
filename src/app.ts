@@ -3,6 +3,7 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
+import connectDB from "./config/db";
 import { errorHandler } from "./middleware/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
 import eventRoutes from "./routes/eventRoutes";
@@ -12,6 +13,8 @@ import reservationRoutes from "./routes/reservationRoutes";
 import contactRoutes from "./routes/contactRoutes";
 
 const app = express();
+
+connectDB();
 
 app.set("query parser", "extended");
 
